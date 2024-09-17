@@ -24,7 +24,7 @@ const randomizeUsers = (filePath) => {
 const filePath = process.argv[2];
 
 if (!filePath) {
-  console.log("Specify the file path of the user list.");
+  console.log("ユーザーリストのファイルパスを指定してください。");
   process.exit(1);
 }
 

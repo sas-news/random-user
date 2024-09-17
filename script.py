@@ -13,7 +13,7 @@ def randomize_users(file_path):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Specify the file path of the user list.")
+        print("ユーザーリストのファイルパスを指定してください。")
         sys.exit(1)
     
     file_path = sys.argv[1]
