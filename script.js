@@ -28,7 +28,13 @@ if (!filePath) {
   process.exit(1);
 }
 
-const randomizedUsers = randomizeUsers(filePath);
+let randomizedUsers;
+try {
+  randomizedUsers = randomizeUsers(filePath);
+} catch {
+  console.log(`ファイルを読み込めませんでした: ${filePath}`);
+  process.exit(1);
+}
 
 randomizedUsers.forEach((user) => {
   console.log(user);
