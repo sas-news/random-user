@@ -37,7 +37,6 @@
   return r;
 })()(
   {
-    1: [function (require, module, exports) {}, {}],
     2: [
       function (require, module, exports) {
         var process = (module.exports = {});
@@ -181,7 +180,9 @@
         process.title = "browser";
         process.browser = true;
         process.env = {};
-        process.argv = [];
+        var realProcess =
+          typeof globalThis === "object" ? globalThis.process : undefined;
+        process.argv = (realProcess && realProcess.argv) || [];
         process.version = "";
         process.versions = {};
 
@@ -214,6 +215,10 @@
         process.umask = function () {
           return 0;
         };
+        process.exit =
+          realProcess && realProcess.exit
+            ? realProcess.exit.bind(realProcess)
+            : function () {};
       },
       {},
     ],
@@ -251,7 +256,13 @@
               process.exit(1);
             }
 
-            const randomizedUsers = randomizeUsers(filePath);
+            let randomizedUsers;
+            try {
+              randomizedUsers = randomizeUsers(filePath);
+            } catch {
+              console.log(`ファイルを読み込めませんでした: ${filePath}`);
+              process.exit(1);
+            }
 
             randomizedUsers.forEach((user) => {
               console.log(user);
@@ -259,7 +270,7 @@
           }).call(this);
         }).call(this, require("_process"));
       },
-      { _process: 2, fs: 1 },
+      { _process: 2 },
     ],
   },
   {},

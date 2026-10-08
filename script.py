@@ -17,7 +17,11 @@ if __name__ == "__main__":
         sys.exit(1)
     
     file_path = sys.argv[1]
-    randomized_users = randomize_users(file_path)
-    
+    try:
+        randomized_users = randomize_users(file_path)
+    except OSError:
+        print(f"ファイルを読み込めませんでした: {file_path}")
+        sys.exit(1)
+
     for user in randomized_users:
         print(user)
